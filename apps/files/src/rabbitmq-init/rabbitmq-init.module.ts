@@ -1,8 +1,5 @@
 import { Module } from '@nestjs/common';
-import {
-  MessageHandlerErrorBehavior,
-  RabbitMQModule,
-} from '@golevelup/nestjs-rabbitmq';
+import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/services/config.service';
 import { Files } from '@demo-chat/shared';

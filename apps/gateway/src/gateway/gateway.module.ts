@@ -19,8 +19,7 @@ import { MembersEvents } from './events/members.events';
 import { ChatsSubscriptionsResolver } from './resolvers/chats/subscriptions/chats.subscriptions.resolver';
 import { MembersSubscriptionsResolver } from './resolvers/members/subscriptions/members.subscriptions.resolver';
 import { UsersMutationsResolver } from './resolvers/users/mutations/users.mutations.resolver';
-import { UsersDataLoader } from './data-loaders/users/users.data-loader';
-import { ChatsDataLoader } from './data-loaders/chats/chats.data-loader';
+import { UsersDataLoader, ChatsDataLoader } from './data-loaders';
 
 @Module({
   imports: [
