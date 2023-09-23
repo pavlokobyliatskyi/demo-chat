@@ -1,7 +1,7 @@
 {
   "name": "demo-chat",
   "version": "1.0.0",
-  "description": "This is an example of a chat app using a microservice architecture.",
+  "description": "This is an example of an api for a chat application using microservice architecture.",
   "keywords": [
     "microservices",
     "graphql",
