@@ -1,0 +1,163 @@
+version: "3.8"
+
+services:
+  rabbitmq_management:
+    container_name: rabbitmq_management
+    image: rabbitmq:3.12.3-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASSWORD}
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: ${RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS}
+    volumes:
+      - rabbitmq_management:/var/lib/rabbitmq
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT}:15672"
+
+  otps_mailcatcher:
+    container_name: otps_mailcatcher
+    image: dockage/mailcatcher:0.9.0
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+
+  otps_redis:
+    container_name: otps_redis
+    image: redis:6.2-alpine
+    ports:
+      - "${OTPS_REDIS_PORT}:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${OTPS_REDIS_PASSWORD}
+    volumes:
+      - otps_redis:/data
+
+  gateway_redis:
+    container_name: gateway_redis
+    image: redis:6.2-alpine
+    ports:
+      - "${GATEWAY_REDIS_PORT}:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${GATEWAY_REDIS_PASSWORD}
+    volumes:
+      - gateway_redis:/data
+
+  users_mongo:
+    container_name: users_mongo
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${USERS_MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${USERS_MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${USERS_MONGO_DATABASE}
+    ports:
+      - "${USERS_MONGO_PORT}:27017"
+    volumes:
+      - users_mongo:/data/db
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  chats_mongo:
+    container_name: chats_mongo
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${CHATS_MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${CHATS_MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${CHATS_MONGO_DATABASE}
+    ports:
+      - "${CHATS_MONGO_PORT}:27017"
+    volumes:
+      - chats_mongo:/data/db
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  members_mongo:
+    container_name: members_mongo
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MEMBERS_MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MEMBERS_MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MEMBERS_MONGO_DATABASE}
+    ports:
+      - "${MEMBERS_MONGO_PORT}:27017"
+    volumes:
+      - members_mongo:/data/db
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  messages_mongo:
+    container_name: messages_mongo
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MESSAGES_MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MESSAGES_MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MESSAGES_MONGO_DATABASE}
+    ports:
+      - "${MESSAGES_MONGO_PORT}:27017"
+    volumes:
+      - messages_mongo:/data/db
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  files_minio:
+    container_name: files_minio
+    image: quay.io/minio/minio:RELEASE.2023-06-16T02-41-06Z
+    command: server --console-address ":${FILES_MINIO_CONSOLE_PORT}" /data
+    ports:
+      - "${FILES_MINIO_PORT}:9000"
+      - "${FILES_MINIO_CONSOLE_PORT}:9001"
+    environment:
+      - MINIO_ROOT_USER=${FILES_MINIO_USER}
+      - MINIO_ROOT_PASSWORD=${FILES_MINIO_PASSWORD}
+      - MINIO_SERVER_URL=http://${FILES_MINIO_SERVER_HOST}:${FILES_MINIO_SERVER_PORT}
+      - MINIO_BROWSER_REDIRECT_URL=http://${FILES_MINIO_BROWSER_REDIRECT_HOST}:${FILES_MINIO_BROWSER_REDIRECT_PORT}
+    volumes:
+      - files_minio:/data
+
+  files_postgres:
+    container_name: files_postgres
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${FILES_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${FILES_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${FILES_POSTGRES_DATABASE}
+    ports:
+      - "${FILES_POSTGRES_PORT}:5432"
+    volumes:
+      - files_postgres:/var/lib/postgresql/data
+
+  search_elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    container_name: search_elasticsearch
+    environment:
+      node.name: elasticsearch
+      cluster.name: es-docker-cluster
+      discovery.type: single-node
+      bootstrap.memory_lock: true
+      ES_JAVA_OPTS: -Xms128m -Xmx512m
+      xpack.security.enabled: true
+      ELASTIC_PASSWORD: ${SEARCH_ELASTICSEARCH_PASSWORD}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - search_elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - "${SEARCH_ELASTICSEARCH_PORT}:9200"
+
+volumes:
+  rabbitmq_management:
+    name: rabbitmq_management
+  otps_redis:
+    name: otps_redis
+  gateway_redis:
+    name: gateway_redis
+  users_mongo:
+    name: users_mongo
+  chats_mongo:
+    name: chats_mongo
+  members_mongo:
+    name: members_mongo
+  messages_mongo:
+    name: messages_mongo
+  files_minio:
+    name: files_minio
+  files_postgres:
+    name: files_postgres
+  search_elasticsearch:
+    name: search_elasticsearch

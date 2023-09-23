@@ -1,0 +1,141 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AuthConfirmSignIn {
+  code: String!
+  email: String!
+}
+
+input AuthConfirmSignUp {
+  code: String!
+  email: String!
+}
+
+input AuthSignIn {
+  email: String!
+}
+
+input AuthSignUp {
+  email: String!
+  name: String!
+}
+
+type Chat {
+  _id: String!
+  tmc: Float!
+  user: User!
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+input FilesUploadPolicy {
+  """The file name must have an extension."""
+  name: String!
+  size: Float!
+  type: String!
+}
+
+input MembersGetChatMembers {
+  chatId: String!
+}
+
+input MembersInviteMember {
+  chatId: String!
+  email: String!
+}
+
+type Message {
+  _id: String!
+  chat: Chat!
+  createdAt: DateTime!
+  text: String!
+  user: User!
+}
+
+input MessagesGetMessages {
+  chatId: String!
+}
+
+input MessagesSendMessage {
+  chatId: String!
+  text: String!
+}
+
+type Mutation {
+  confirmSignIn(args: AuthConfirmSignIn!): Token
+  confirmSignUp(args: AuthConfirmSignUp!): Token
+
+  """Generate a policy for uploading a file."""
+  generateUploadPolicy(args: FilesUploadPolicy!): PreUploadPolicy!
+
+  """Invite the user to become a member of the chat."""
+  inviteMember(args: MembersInviteMember!): Void
+  refreshToken: Token
+  sendMessage(args: MessagesSendMessage!): Message!
+  signIn(args: AuthSignIn!): Void
+  signOut: Void
+  signUp(args: AuthSignUp!): Void
+  updateInfo(args: UpdateUser!): User!
+}
+
+type PreUploadPolicy {
+  formData: UploadPolicyFormData!
+  id: String!
+  postUrl: String!
+}
+
+type Query {
+  chatMembers(args: MembersGetChatMembers!): [User!]!
+  chatMessages(args: MessagesGetMessages!): [Message!]!
+  chats: [Chat!]!
+
+  """Request to search for any messages in all your chats."""
+  search(args: SearchQ!): [Message!]!
+  user: User!
+}
+
+input SearchQ {
+  query: String!
+}
+
+type Subscription {
+  newChat: Chat!
+  newMember: User!
+  newMessage: Message
+}
+
+type Token {
+  accessToken: String!
+}
+
+input UpdateUser {
+  name: String
+  pictureFileId: String
+}
+
+type UploadPolicyFormData {
+  bucket: String!
+  contentDisposition: String!
+  contentType: String!
+  key: String!
+  policy: String!
+  xAmzAlgorithm: String!
+  xAmzCredential: String!
+  xAmzDate: String!
+  xAmzSignature: String!
+}
+
+type User {
+  _id: String!
+  email: String!
+  isEmailVerified: Boolean!
+  name: String!
+  pictureUrl: String!
+}
+
+"""Represents NULL values"""
+scalar Void
