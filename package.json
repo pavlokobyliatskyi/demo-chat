@@ -16,7 +16,8 @@
     "nodemailer",
     "dataloaders",
     "elasticsearch",
-    "minio"
+    "minio",
+    "nestjs"
   ],
   "homepage": "",
   "bugs": {
