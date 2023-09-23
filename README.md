@@ -1,6 +1,6 @@
 # Demo Chat
 
-This is an example of a chat application that uses microservices architecture. You may see some not quite right decisions and incomplete work here, but it doesn't matter. Happy path.
+This is an example of an api for a chat application using microservice architecture. You may see some not quite right decisions and incomplete work here, but it doesn't matter. Happy path.
 
 [Logs](apps%2Flogs%2FREADME.md), [Otps](apps%2Fotps%2FREADME.md), [Files](apps%2Ffiles%2FREADME.md),
 [Emails](apps%2Femails%2FREADME.md), [Users](apps%2Fusers%2FREADME.md), [Auth](apps%2Fauth%2FREADME.md),

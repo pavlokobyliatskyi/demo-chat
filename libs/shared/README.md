@@ -1,7 +1,3 @@
-# shared
+## Shared
 
-This library was generated with [Nx](https://nx.dev).
-
-## Building
-
-Run `nx build shared` to build the library.
+Shared is a library of files to be shared between all apps. 
