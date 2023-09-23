@@ -1,6 +1,4 @@
-## Demo Chat
-
----
+# Demo Chat
 
 This is an example of a chat application that uses microservices architecture. You may see some not quite right decisions and incomplete work here, but it doesn't matter. Happy path.
 
@@ -9,9 +7,7 @@ This is an example of a chat application that uses microservices architecture. Y
 [Chats](apps%2Fchats%2FREADME.md), [Members](apps%2Fmembers%2FREADME.md), [Messages](apps%2Fmessages%2FREADME.md),
 [Search](apps%2Fsearch%2FREADME.md), [Gateway](apps%2Fgateway%2FREADME.md).
 
-### Running
-
----
+## Running
 
 1. Install dependencies.
 ```shell
