@@ -23,7 +23,6 @@ export class ChatsEvents {
   ): Promise<Chats.ChatsNewChatEventContract.Response> {
     this.logger.log(`Create an index for a new chat ${JSON.stringify(args)}`);
 
-    // Create an index
     await this.messagesIndexService.createIndex(args._id);
   }
 }
