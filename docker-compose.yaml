@@ -3,7 +3,7 @@ version: '3.8'
 services:
   rabbitmq_management:
     container_name: rabbitmq_management
-    image: rabbitmq:3.12.3-management
+    image: rabbitmq:3.12.14-management
     hostname: rabbitmq
     restart: always
     environment:

@@ -1,8 +1,9 @@
 import {
-  createParamDecorator,
   ExecutionContext,
   UnauthorizedException,
+  createParamDecorator,
 } from '@nestjs/common';
+
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Users } from '@demo-chat/shared';
 

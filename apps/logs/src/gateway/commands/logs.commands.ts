@@ -4,7 +4,7 @@ import { LogsService } from '../../logs/services/logs.service';
 import { Logs } from '@demo-chat/shared';
 
 @Controller()
-export class LogsCommands {
+export class LogLogsCommands {
   constructor(@Inject(LogsService) private readonly logsService: LogsService) {}
 
   @RabbitRPC({

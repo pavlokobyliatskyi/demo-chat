@@ -1,9 +1,10 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { GatewayModule } from './gateway/gateway.module';
+
 import { BadExceptionFilter } from './exceptions/bad-exception.filter';
+import { GatewayModule } from './gateway/gateway.module';
 import { LoggerErrorInterceptor } from 'nestjs-pino';
 import { LoggerService } from './logger/services/logger.service';
+import { NestFactory } from '@nestjs/core';
 
 const main = async () => {
   const app = await NestFactory.create(GatewayModule, {

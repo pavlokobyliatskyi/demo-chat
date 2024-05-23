@@ -38,13 +38,12 @@ export class MinioService {
     }
 
     return new Promise((resolve, reject) => {
-      this.minioClient.makeBucket(this.bucket, (e: Error) => {
-        if (e) {
-          this.logger.error(e.message);
+      this.minioClient.makeBucket(this.bucket).then(() => {
+        resolve(true)
+      }).catch((e) => {
+        this.logger.error(e.message);
           reject(e);
-        }
-        resolve(true);
-      });
+      })
     });
   }
 
@@ -140,37 +139,34 @@ export class MinioService {
         {
           'content-type': mimetype,
         },
-        (e) => {
-          if (e) {
-            this.logger.error(e.message);
-            reject(e);
-          }
-          resolve(true);
-        }
-      );
+      ).then(() => resolve(true)).catch(() => reject(false));
     });
   }
 
   public async getObject(objectName: string): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-      const chunks = [];
+    // let size = 0
 
-      this.minioClient.getObject(this.bucket, objectName, (e, dataStream) => {
-        if (e) {
-          reject(e);
-        }
-        dataStream.on('data', (chunk) => {
+    return new Promise( (resolve, reject) => {
+      
+
+      this.minioClient.getObject(this.bucket, objectName).then((dataStream) =>{ 
+        const chunks: Buffer[] = [];
+
+        dataStream.on('data', (chunk: Buffer) => {
           chunks.push(chunk);
         });
+      
         dataStream.on('end', () => {
           resolve(Buffer.concat(chunks));
         });
-        dataStream.on('error', (e) => {
-          this.logger.error(e.message);
-          reject(e);
+      
+        dataStream.on('error', (err: Error) => {
+          this.logger.error(err.message);
+          reject(err);
         });
-      });
-    });
+      })      
+    })
+    
   }
 
   public async statObject(objectName: string): Promise<BucketItemStat | null> {

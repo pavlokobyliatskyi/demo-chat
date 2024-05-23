@@ -7,7 +7,7 @@ This is an example of an api for a chat application using microservice architect
 [Chats](apps%2Fchats%2FREADME.md), [Members](apps%2Fmembers%2FREADME.md), [Messages](apps%2Fmessages%2FREADME.md),
 [Search](apps%2Fsearch%2FREADME.md), [Gateway](apps%2Fgateway%2FREADME.md).
 
-## Running
+## Running (~8.5 GB/RAM)
 
 1. Install dependencies.
 ```shell
@@ -33,3 +33,6 @@ http://localhost:3333/graphql
 ```
 http://localhost:1080
 ```
+
+## Packages:
+“@golevelup/nestjs-rabbitmq” on “^5.3.0” has the error “AmqpConnection Received message with invalid routing key”, so use “4.1.0”.

@@ -38,7 +38,8 @@ export class AuthEvents {
       Chats.ChatsNewChatEventContract.exchange.chats.name,
       Chats.ChatsNewChatEventContract.routing.newChatEvent.name,
       {
-        _id: newChat._id,
+        // TODO: Fix
+        _id: newChat._id as string,
         userId: newChat.userId,
         tmc: newChat.tmc,
       }

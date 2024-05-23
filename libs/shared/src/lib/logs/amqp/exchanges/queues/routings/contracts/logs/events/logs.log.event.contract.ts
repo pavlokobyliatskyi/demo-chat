@@ -1,6 +1,6 @@
 import { Exchanges } from '../../../../../exchanges';
-import { Queues } from '../../../../queues';
 import { IsOptional } from 'class-validator';
+import { Queues } from '../../../../queues';
 import { Routings } from '../../../routings';
 
 export namespace LogsLogEventContract {
