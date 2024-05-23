@@ -27,7 +27,8 @@ export class ChatsQueries {
 
     return {
       chats: chats.map((chat) => ({
-        _id: chat._id,
+        // TODO: Fix
+        _id: chat._id as string,
         userId: chat.userId,
         tmc: chat.tmc,
       })),

@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/services/config.service';
+import { Module } from '@nestjs/common';
 import { Otps } from '@demo-chat/shared';
+import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 
 @Module({
   imports: [

@@ -3,7 +3,7 @@ import { EmailsService } from '../../emails/services/emails.service';
 import {
   AmqpConnection,
   RabbitPayload,
-  RabbitRPC,
+  RabbitRPC
 } from '@golevelup/nestjs-rabbitmq';
 import { Auth, Otps } from '@demo-chat/shared';
 
