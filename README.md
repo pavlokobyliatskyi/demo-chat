@@ -11,7 +11,7 @@ This is an example of an api for a chat application using microservice architect
 
 1. Install dependencies.
 ```shell
-npm install
+npm ci
 ```
 
 2. Run the required apps with docker compose.
